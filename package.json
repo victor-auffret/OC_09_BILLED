@@ -1,0 +1,30 @@
+{
+  "name": "oc_09_billed",
+  "version": "1.0.0",
+  "description": "billed projet 9 dajr",
+  "main": "index.js",
+  "workspaces": [
+    "bill-app/*"
+  ],
+  "scripts": {
+    "dev": "npm run run:dev --workspace=billapp-backend",
+    "test": "npm run test:back",
+    "test:back": "npm run test --workspace=billapp-backend",
+    "test:front": "npm run test --workspace=billapp-frontend"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/victor-auffret/OC_09_BILLED"
+  },
+  "author": "victor-auffret",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/victor-auffret/OC_09_BILLED/issues"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}
