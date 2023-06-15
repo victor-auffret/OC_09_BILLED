@@ -7,10 +7,10 @@
     "bill-app/*"
   ],
   "scripts": {
-    "dev": "npm run run:dev --workspace=billapp-backend",
+    "dev": "npm run run:dev --workspace=Billed-app-FR-Back-main",
     "test": "npm run test:back",
-    "test:back": "npm run test --workspace=billapp-backend",
-    "test:front": "npm run test --workspace=billapp-frontend"
+    "test:back": "npm run test --workspace=Billed-app-FR-Back-main",
+    "test:front": "npm run test --workspace=Billed-app-FR-Front-main"
   },
   "engines": {
     "node": ">=18"
