@@ -11,3 +11,11 @@ historique des modifications apportées au projet
 
 /__tests__/Bills.js
  - ajout du test active-icon sur le paneau latéral 
+
+/containers/Bills.js
+ - deplacement de style='text-align: center;' au fichier css
+/css/bills.css
+
+/containers/Dashboard.js
+ - unbind("click") + utilisation d'un booleen au lieu d'un counter
+
