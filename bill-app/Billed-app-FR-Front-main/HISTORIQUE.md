@@ -19,3 +19,19 @@ historique des modifications apportées au projet
 /containers/Dashboard.js
  - unbind("click") + utilisation d'un booleen au lieu d'un counter
 
+/views/NewBillUI.js
+ - ajout de accept="image/png, image/jpeg" puis de "image/*"
+
+/containers/NewBill.js
+ - test acceptedMimeType pour filtrer sur les images
+ - supprimer fichier si mauvais mime type
+  const dt = new DataTransfer()
+  input.files = dt.files
+ - empêcher envoie de données + redirection avec submit si fileName null
+
+/__tests__/NewBill.js 
+ - champs vides lors du chargement de la page
+ - test appel de submit
+
+
+ 
