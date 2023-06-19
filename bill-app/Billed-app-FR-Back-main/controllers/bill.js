@@ -20,6 +20,7 @@ const create = async (req, res) => {
       commentAdmin,
       amount,
     } = req.body;
+
     const { file } = req;
     const bill = await Bill.create({
       name,

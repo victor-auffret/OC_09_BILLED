@@ -35,22 +35,8 @@ export default class NewBill {
     const fileName = filePath[filePath.length - 1]
     const formData = new FormData()
     const email = JSON.parse(localStorage.getItem("user")).email
-
-    //console.log("email", email)
-    /*
-    file.mimetype = file.type
-    file.fileUrl = filePath
-    file.originalname = fileName
-    file.path = e.target.value
-    */
-
     formData.append('file', file)
     formData.append('email', email)
-
-    /*
-    for (let ent of formData.entries()) {
-      console.log("formdata : ", ent)
-    }*/
 
     const acceptedMimeType = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
 
@@ -64,7 +50,6 @@ export default class NewBill {
           }
         })
         .then((res) => {
-
           console.log("res", res)
           const { fileUrl, /*fileName,*/ key, filePath } = res
           //const { fileUrl, key } = res
@@ -91,22 +76,22 @@ export default class NewBill {
 
   handleSubmit = e => {
     e.preventDefault()
-    console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
-    const email = JSON.parse(localStorage.getItem("user")).email
-    const bill = {
-      email,
-      type: e.target.querySelector(`select[data-testid="expense-type"]`).value,
-      name: e.target.querySelector(`input[data-testid="expense-name"]`).value,
-      amount: parseInt(e.target.querySelector(`input[data-testid="amount"]`).value),
-      date: e.target.querySelector(`input[data-testid="datepicker"]`).value,
-      vat: e.target.querySelector(`input[data-testid="vat"]`).value,
-      pct: parseInt(e.target.querySelector(`input[data-testid="pct"]`).value) || 20,
-      commentary: e.target.querySelector(`textarea[data-testid="commentary"]`).value,
-      fileUrl: this.fileUrl,
-      fileName: this.fileName,
-      status: 'pending'
-    }
     if (this.fileName != null && this.fileUrl != null) {
+      console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
+      const email = JSON.parse(localStorage.getItem("user")).email
+      const bill = {
+        email,
+        type: e.target.querySelector(`select[data-testid="expense-type"]`).value,
+        name: e.target.querySelector(`input[data-testid="expense-name"]`).value,
+        amount: parseInt(e.target.querySelector(`input[data-testid="amount"]`).value),
+        date: e.target.querySelector(`input[data-testid="datepicker"]`).value,
+        vat: e.target.querySelector(`input[data-testid="vat"]`).value,
+        pct: parseInt(e.target.querySelector(`input[data-testid="pct"]`).value) || 20,
+        commentary: e.target.querySelector(`textarea[data-testid="commentary"]`).value,
+        fileUrl: this.fileUrl,
+        fileName: this.fileName,
+        status: 'pending'
+      }
       this.updateBill(bill)
       this.onNavigate(ROUTES_PATH['Bills'])
     }
