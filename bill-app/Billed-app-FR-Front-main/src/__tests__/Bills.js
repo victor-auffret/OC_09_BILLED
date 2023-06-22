@@ -44,6 +44,14 @@ describe("Given I am connected as an employee", () => {
 
   describe("When i am on Bills Page and i click on new Bills button", () => {
     test("Then i'm on new bills page", () => {
+
+      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+      window.localStorage.setItem('user', JSON.stringify({
+        type: 'Employee'
+      }))
+
+      // button[data-testid="btn-new-bill"]
+      // const btn = 
       expect(2 + 2).toBe(4)
     })
   })

@@ -32,12 +32,14 @@ historique des modifications apportées au projet
 /__tests__/NewBill.js 
  - champs vides lors du chargement de la page
  - test appel de submit
-
+ - test changement fichier non image 
 -------------------------
 
 tests unitaires / intégrations 
 
-
+/__tests__/Login.js 
+ - ajout test utiliser mdp admin avec formulaire employee
+ - ajout test utiliser mdp employe avec formulaire admin 
 
 
 
