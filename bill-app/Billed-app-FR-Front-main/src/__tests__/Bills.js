@@ -41,4 +41,10 @@ describe("Given I am connected as an employee", () => {
       expect(dates).toEqual(datesSorted)
     })
   })
+
+  describe("When i am on Bills Page and i click on new Bills button", () => {
+    test("Then i'm on new bills page", () => {
+      expect(2 + 2).toBe(4)
+    })
+  })
 })

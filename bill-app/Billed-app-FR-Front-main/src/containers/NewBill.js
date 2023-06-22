@@ -64,12 +64,9 @@ export default class NewBill {
       console.log("mauvais mime type")
       this.fileName = null;
       this.fileUrl = null;
-
-      {
-        const dt = new DataTransfer()
-        input.files = dt.files
-      }
-
+      const dt = new DataTransfer()
+      input.files = dt.files
+      input.files = []
       input.value = ""
     }
   }

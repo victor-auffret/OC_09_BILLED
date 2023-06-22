@@ -50,5 +50,35 @@ describe("Given I am connected as an employee", () => {
       expect(screen.getByTestId("form-new-bill")).toBeTruthy();
 
     })
+
+
+    describe("And i try to add file img with bad extension", () => {
+      test("Then it should render empty file input", () => {
+        const html = NewBillUI()
+        document.body.innerHTML = html
+
+        // { document, onNavigate, store, localStorage }
+
+        const inputFile = screen.getByTestId("file")
+
+        expect(inputFile).toBeTruthy()
+
+        const handleChange = jest.fn((e) => e.preventDefault())
+
+        inputFile.addEventListener("change", handleChange)
+
+        fireEvent.change(inputFile, {
+          dataTransfer: {
+            files: [new File(['song.mp3'], 'song.mp3', { type: 'audio/mp3' })],
+          }
+        })
+
+        expect(handleChange).toHaveBeenCalled()
+
+        expect(inputFile.value).toBe('')
+
+
+      })
+    })
   })
 })

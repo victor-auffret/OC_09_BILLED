@@ -33,5 +33,16 @@ historique des modifications apportées au projet
  - champs vides lors du chargement de la page
  - test appel de submit
 
+-------------------------
 
+tests unitaires / intégrations 
+
+
+
+
+
+
+-------------------------
+
+tests end to end (parcours employé)
  

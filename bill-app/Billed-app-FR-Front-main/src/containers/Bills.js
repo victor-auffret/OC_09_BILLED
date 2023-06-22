@@ -28,7 +28,7 @@ export default class {
     const billFileName = icon.getAttribute("data-bill-fileName")
     const separate_url = billFileName.split(".")
     const ext = separate_url[separate_url.length - 1]
-    const ext_ok = ["png", "jpg", "jpeg"].includes(ext)
+    const ext_ok = ["png", "jpg", "jpeg", "gif"].includes(ext)
     */
     const img_is_ok = true
     const image = img_is_ok ? `<img class="img-justificatif" width=${imgWidth} src=${billUrl} alt="Bill ${billUrl}" />` : "pas de justificatif"
