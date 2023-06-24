@@ -26,18 +26,15 @@ export default class {
     const billUrl = icon.getAttribute("data-bill-url")
     const imgWidth = Math.floor($('#modaleFile').width() * 0.5)
     // ajout :
-    /*
-    const billFileName = icon.getAttribute("data-bill-fileName")
-    const separate_url = billFileName.split(".")
-    const ext = separate_url[separate_url.length - 1]
-    const ext_ok = ["png", "jpg", "jpeg", "gif"].includes(ext)
-    */
-    const img_is_ok = true
-    const image = img_is_ok ? `<img class="img-justificatif" width=${imgWidth} src=${billUrl} alt="Bill ${billUrl}" />` : "pas de justificatif"
+    const img = `<img class="img-justificatif" width=${imgWidth} src=${billUrl} alt="Bill ${billUrl}" />`
+    const image = (billUrl != "") ? img : "pas de justificatif"
     $('#modaleFile')
       .find(".modal-body")
       .html(`<div class="bill-proof-container">${image}</div>`)
     // .html(`<div style='text-align: center;' class="bill-proof-container"><img width=${imgWidth} src=${billUrl} alt="Bill" /></div>`)
+
+    // modifier car bootstrap non répertorié en dépendance
+    // $('#modaleFile').modal('show')
     let elem = $('#modaleFile')
     if ('modal' in elem) {
       elem.modal('show')

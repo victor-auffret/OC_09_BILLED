@@ -45,6 +45,8 @@ tests unitaires / intégrations
  - test "new bills button"
  - test "format date load bills mock"
  - test "open modale" => echec à cause de bootstrap
+ - "fix" du bug de bootstrap en ajoutant une condition dans containers/Bills.js
+
 
 -------------------------
 
