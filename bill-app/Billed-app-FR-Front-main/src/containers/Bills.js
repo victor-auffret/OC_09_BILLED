@@ -69,5 +69,7 @@ export default class {
           return bills
         })
     }
+    // ajout : 
+    return false
   }
 }

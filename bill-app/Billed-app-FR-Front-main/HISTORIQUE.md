@@ -41,8 +41,9 @@ tests unitaires / intégrations
  - ajout test utiliser mdp admin avec formulaire employee
  - ajout test utiliser mdp employe avec formulaire admin 
 
-
-
+/__tests__/Bills.js
+ - test "new bills button"
+ - 
 
 -------------------------
 
