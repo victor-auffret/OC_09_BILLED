@@ -43,7 +43,8 @@ tests unitaires / intégrations
 
 /__tests__/Bills.js
  - test "new bills button"
- - 
+ - test "format date load bills mock"
+ - test "open modale" => echec à cause de bootstrap
 
 -------------------------
 

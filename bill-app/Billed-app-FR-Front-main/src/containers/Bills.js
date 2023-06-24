@@ -1,3 +1,5 @@
+//import $ from "jquery"
+
 import { ROUTES_PATH } from '../constants/routes.js'
 import { formatDate, formatStatus } from "../app/format.js"
 import Logout from "./Logout.js"
@@ -36,8 +38,7 @@ export default class {
       .find(".modal-body")
       .html(`<div class="bill-proof-container">${image}</div>`)
     // .html(`<div style='text-align: center;' class="bill-proof-container"><img width=${imgWidth} src=${billUrl} alt="Bill" /></div>`)
-    $('#modaleFile')
-      .modal('show')
+    $('#modaleFile').modal('show')
   }
 
   getBills = () => {

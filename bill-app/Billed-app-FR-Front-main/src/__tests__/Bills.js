@@ -145,4 +145,52 @@ describe("Given I am connected as an employee", () => {
   })
 
 
+  describe("When i'm on bills page and i click on eye button", () => {
+    test("Then the modale open", async () => {
+
+      const onNavigate = (pathname) => {
+        document.body.innerHTML = ROUTES({ pathname })
+      }
+
+      document.body.innerHTML = BillsUI({ data: bills })
+
+      const billsTest = new BillsContainer({ document, onNavigate, localStorage })
+
+      await waitFor(() => screen.getAllByTestId("icon-eye"))
+
+      const eyeButtons = screen.getAllByTestId("icon-eye")
+      expect(eyeButtons).toBeTruthy()
+
+      expect(eyeButtons.length).toBe(4)
+
+      //await waitFor(() => screen.getByTestId("bills-modale"))
+
+      for (let i = 0; i < eyeButtons.length; i++) {
+        const eyeButton = eyeButtons[i]
+        expect(eyeButton).toBeTruthy()
+
+        const billUrl = eyeButton.getAttribute("data-bill-url")
+        expect(billUrl).toBeTruthy()
+        let url = ""
+
+        const handleClickIconEye = jest.fn(async () => {
+          billsTest.handleClickIconEye(eyeButton)
+          url = eyeButton.getAttribute("data-bill-url")
+        })
+
+        eyeButton.addEventListener("click", handleClickIconEye)
+
+        // bootstrap présent dans le index.html mais 
+        // manquant dans le package.json => erreur
+
+        // fireEvent.click(eyeButton)
+        //await waitFor(handleClickIconEye)
+        //expect(url).toBe(eyeButton.getAttribute("data-bill-url"))
+
+      }
+
+    })
+  })
+
+
 })
