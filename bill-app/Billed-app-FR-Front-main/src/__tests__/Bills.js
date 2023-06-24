@@ -183,9 +183,13 @@ describe("Given I am connected as an employee", () => {
         // bootstrap présent dans le index.html mais 
         // manquant dans le package.json => erreur
 
-        // fireEvent.click(eyeButton)
+        fireEvent.click(eyeButton)
+
+        expect(handleClickIconEye).toHaveBeenCalled()
+
         //await waitFor(handleClickIconEye)
-        //expect(url).toBe(eyeButton.getAttribute("data-bill-url"))
+
+        expect(url).toBe(billUrl)
 
       }
 

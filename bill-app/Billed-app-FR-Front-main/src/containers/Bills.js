@@ -38,7 +38,11 @@ export default class {
       .find(".modal-body")
       .html(`<div class="bill-proof-container">${image}</div>`)
     // .html(`<div style='text-align: center;' class="bill-proof-container"><img width=${imgWidth} src=${billUrl} alt="Bill" /></div>`)
-    $('#modaleFile').modal('show')
+    let elem = $('#modaleFile')
+    if ('modal' in elem) {
+      elem.modal('show')
+    }
+
   }
 
   getBills = () => {
