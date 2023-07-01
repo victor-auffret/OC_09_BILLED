@@ -47,7 +47,11 @@ tests unitaires / intégrations
  - test "open modale" => echec à cause de bootstrap
  - "fix" du bug de bootstrap en ajoutant une condition dans containers/Bills.js
 
-
+/__tests__/nNewBills.js 
+ - test submit form container newbills 
+ - test handle change container new bills 
+ - test drop file container new bills 
+ - test updateBill navigate
 -------------------------
 
 tests end to end (parcours employé)

@@ -39,6 +39,8 @@ export default class NewBill {
     formData.append('email', email)
 
     const acceptedMimeType = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
+    //const acceptExt = ["jpg", "jpeg", "png", "gif"]
+    // acceptExt.findIndex(ext => file?.fileName?.endsWith(ext)) >= 0
 
     if (acceptedMimeType.includes(file?.type)) {
       this.store
@@ -61,7 +63,8 @@ export default class NewBill {
           this.fileName = fileName
         }).catch(error => console.error(error))
     } else {
-      console.log("mauvais mime type")
+
+      //console.log("mauvais mime type")
       this.fileName = null;
       this.fileUrl = null;
       if ("DataTransfer" in globalThis) {
@@ -69,7 +72,11 @@ export default class NewBill {
         input.files = dt.files
       }
       //input.files = []
+      input.type = "text"
+      delete input.files
       input.value = ""
+      input.type = "file"
+      //throw new Error("mauvais format : " + JSON.stringify(e) + " file => " + file.type)
     }
   }
 
