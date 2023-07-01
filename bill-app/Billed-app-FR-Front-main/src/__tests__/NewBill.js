@@ -5,7 +5,8 @@
 import { fireEvent, screen, waitFor } from "@testing-library/dom"
 import NewBillUI from "../views/NewBillUI.js"
 import NewBill from "../containers/NewBill.js"
-
+import { mockedBills } from "../__mocks__/store.js"
+import { localStorageMock } from "../__mocks__/localStorage.js"
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on NewBill Page", () => {
@@ -42,7 +43,7 @@ describe("Given I am connected as an employee", () => {
       const form = await screen.getByTestId('form-new-bill')
       expect(form).toBeTruthy()
 
-      const handleSubmit = jest.fn((e) => e.preventDefault());
+      const handleSubmit = jest.fn(() => { });
 
       form.addEventListener("submit", handleSubmit);
       fireEvent.submit(form);
@@ -51,19 +52,94 @@ describe("Given I am connected as an employee", () => {
 
     })
 
+    describe("When i try to submit form", () => {
+      test("Then it should be call store", () => {
 
-    describe("And i try to add file img with bad extension", () => {
-      test("Then it should render empty file input", () => {
-        const html = NewBillUI()
-        document.body.innerHTML = html
+        const onNavigate = (pathname) => {
+          document.body.innerHTML = ROUTES({ pathname })
+        }
 
-        // { document, onNavigate, store, localStorage }
+        Object.defineProperty(window, "localStorage", {
+          value: {
+            getItem: jest.fn(() => null),
+            setItem: jest.fn(() => null),
+          },
+          writable: true,
+        });
+
+        /*
+        window.localStorage.setItem("user", JSON.stringify({
+          type: "Employee",
+          email: "test@test.com",
+          password: "test",
+          status: "connected"
+        }))*/
+
+        const newBill = new NewBill({
+          document,
+          onNavigate,
+          store: mockedBills,
+          localStorage: window.localStorage
+        })
+
+        document.body.innerHTML = NewBillUI()
+
+        const form = screen.getByTestId("form-new-bill")
+        expect(form).toBeTruthy()
+
+        const handleSubmit = jest.fn((e) => newBill.handleSubmit(e))
+
+        form.addEventListener("submit", handleSubmit);
+        fireEvent.submit(form);
+        expect(handleSubmit).toHaveBeenCalled();
+
+      })
+    })
+
+
+    describe("When i try to add file img with bad extension", () => {
+      test("Then it should render empty file input", async () => {
+
+        const onNavigate = (pathname) => {
+          document.body.innerHTML = ROUTES({ pathname })
+        }
+
+        const user = {
+          type: "Employee",
+          email: "test@test.com",
+          password: "test",
+          status: "connected"
+        }
+
+        Object.defineProperty(window, "localStorage", {
+          value: {
+            getItem: jest.fn(() => {
+              return JSON.stringify(user)
+            }),
+            setItem: jest.fn(() => null),
+          },
+          writable: true,
+        });
+
+        const a_tester = window.localStorage.getItem("user")
+        expect(a_tester).toBe(JSON.stringify(user).toString())
+
+        expect(JSON.parse(a_tester).email).toBe(user.email)
+
+        const newBill = new NewBill({
+          document,
+          onNavigate,
+          store: mockedBills,
+          localStorage: window.localStorage
+        })
+
+        document.body.innerHTML = NewBillUI()
 
         const inputFile = screen.getByTestId("file")
 
         expect(inputFile).toBeTruthy()
 
-        const handleChange = jest.fn((e) => e.preventDefault())
+        const handleChange = jest.fn(e => newBill.handleChangeFile(e))
 
         inputFile.addEventListener("change", handleChange)
 
@@ -77,6 +153,7 @@ describe("Given I am connected as an employee", () => {
 
         expect(inputFile.value).toBe('')
 
+        expect(inputFile.files.length).toBe(0)
 
       })
     })

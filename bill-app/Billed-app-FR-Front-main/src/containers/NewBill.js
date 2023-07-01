@@ -40,7 +40,7 @@ export default class NewBill {
 
     const acceptedMimeType = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
 
-    if (acceptedMimeType.includes(file.type)) {
+    if (acceptedMimeType.includes(file?.type)) {
       this.store
         .bills()
         .create({
@@ -64,9 +64,11 @@ export default class NewBill {
       console.log("mauvais mime type")
       this.fileName = null;
       this.fileUrl = null;
-      const dt = new DataTransfer()
-      input.files = dt.files
-      input.files = []
+      if ("DataTransfer" in globalThis) {
+        const dt = new globalThis.DataTransfer()
+        input.files = dt.files
+      }
+      //input.files = []
       input.value = ""
     }
   }
