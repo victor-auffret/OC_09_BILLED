@@ -52,6 +52,9 @@ tests unitaires / intégrations
  - test handle change container new bills 
  - test drop file container new bills 
  - test updateBill navigate
+ BUG
+  - utilisation de user event 62.96%
+ - correction bug user event 77.77%
 -------------------------
 
 tests end to end (parcours employé)

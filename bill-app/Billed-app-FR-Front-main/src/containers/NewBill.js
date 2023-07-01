@@ -76,7 +76,7 @@ export default class NewBill {
       delete input.files
       input.value = ""
       input.type = "file"
-      //throw new Error("mauvais format : " + JSON.stringify(e) + " file => " + file.type)
+      // throw new Error("mauvais format : " + JSON.stringify(e) + " file => " + file.type)
     }
   }
 

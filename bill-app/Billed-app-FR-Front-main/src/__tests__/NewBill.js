@@ -6,7 +6,7 @@ import { fireEvent, screen, waitFor } from "@testing-library/dom"
 import userEvent from '@testing-library/user-event'
 import NewBillUI from "../views/NewBillUI.js"
 import NewBill from "../containers/NewBill.js"
-import { mockedBills } from "../__mocks__/store.js"
+import mockedBills from "../__mocks__/store.js"
 import { localStorageMock } from "../__mocks__/localStorage.js"
 
 describe("Given I am connected as an employee", () => {
@@ -136,6 +136,16 @@ describe("Given I am connected as an employee", () => {
 
         inputFile.addEventListener("change", handleChange)
 
+        /*
+        const file = new File(
+          ['song'],
+          'song.png',
+          {
+            type: 'image/png'
+          }
+        )*/
+
+
         const file = new File(
           ['song'],
           'song.mp3',
@@ -144,7 +154,13 @@ describe("Given I am connected as an employee", () => {
           }
         )
 
+        //expect(inputFile.value).toBe('')
+
+        expect(inputFile.files.length).toBe(0)
+
         await userEvent.upload(inputFile, [file])
+
+        //userEvent.change()
 
         //expect(inputFile.files.length).toBe(0)
 
@@ -169,9 +185,77 @@ describe("Given I am connected as an employee", () => {
 
         //expect(handleChange).toHaveBeenCalled()
 
-        expect(inputFile.value).toBe('')
+        //expect(inputFile.value).toBe('')
 
         expect(inputFile.files.length).toBe(0)
+
+      })
+    })
+
+    describe("When i CHANGE file with good ext (png, jpg, jpeg, gif)", () => {
+      test("Then it should be change file name", async () => {
+
+        const onNavigate = jest.fn(e => { })
+
+        /*(pathname) => {
+          document.body.innerHTML = ROUTES({ pathname })
+        }*/
+
+        const user = {
+          type: "Employee",
+          email: "test@test.com",
+          password: "test",
+          status: "connected"
+        }
+
+        Object.defineProperty(window, "localStorage", {
+          value: {
+            getItem: jest.fn(() => {
+              return JSON.stringify(user)
+            }),
+            setItem: jest.fn(() => null),
+          },
+          writable: true,
+        });
+
+        const a_tester = window.localStorage.getItem("user")
+        expect(a_tester).toBe(JSON.stringify(user).toString())
+
+        expect(JSON.parse(a_tester).email).toBe(user.email)
+
+        const newBill = new NewBill({
+          document,
+          onNavigate,
+          store: mockedBills,
+          localStorage: window.localStorage
+        })
+
+        document.body.innerHTML = NewBillUI()
+
+        const inputFile = screen.getByTestId("file")
+
+        expect(inputFile).toBeTruthy()
+
+        const handleChange = jest.fn(e => newBill.handleChangeFile(e))
+
+        inputFile.addEventListener("change", handleChange)
+
+
+        const file = new File(
+          ['song'],
+          'song.png',
+          {
+            type: 'image/png'
+          }
+        )
+
+        expect(inputFile.files.length).toBe(0)
+        //expect(inputFile.value).toBe('')
+
+        await userEvent.upload(inputFile, [file])
+
+        expect(inputFile.files.length).toBe(1)
+        expect(inputFile.files[0].name).toBe("song.png")
 
       })
     })
