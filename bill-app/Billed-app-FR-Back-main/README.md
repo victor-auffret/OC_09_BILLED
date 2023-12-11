@@ -34,7 +34,7 @@ L'api est accessible sur le port `5678` en local, c'est à dire `http://localhos
 
 ### administrateur : 
 ```
-utilisateur : admin@test.tld 
+utilisateur : admin@test.tld
 mot de passe : admin
 ```
 ### employé :

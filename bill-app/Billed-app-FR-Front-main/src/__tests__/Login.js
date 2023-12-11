@@ -4,14 +4,14 @@
 
 import LoginUI from "../views/LoginUI";
 import Login from "../containers/Login.js";
-import { ROUTES } from "../constants/routes";
+import { ROUTES, ROUTES_PATH } from "../constants/routes";
 import { fireEvent, screen, waitFor } from "@testing-library/dom";
+//import monRouter from "../app/Router"
 
-
-
+// employe
 describe("Given that I am a user on login page", () => {
 
-  //
+
   describe("When i do not anything", () => {
     test("Then it should localstorage is empty", () => {
       document.body.innerHTML = LoginUI();
@@ -280,6 +280,7 @@ describe("Given that I am a user on login page", () => {
 
 });
 
+// admin
 describe("Given that I am a user on login page", () => {
   describe("When I do not fill fields and I click on admin button Login In", () => {
     test("Then It should renders Login page", () => {
@@ -460,3 +461,56 @@ describe("Given that I am a user on login page", () => {
     })
   })
 });
+
+// both 
+/*
+describe("Given that I am a user on login page", () => {
+  describe("When i use previous event button without be connected", () => {
+    test("Then it should be on a login page", () => {
+
+      document.body.innerHTML = LoginUI()
+
+      let PREVIOUS_LOCATION = ""
+      let currentLocation = ROUTES_PATH.Login;
+      let cpt = 0;
+
+      const onNavigate = (path) => {
+        if (path == PREVIOUS_LOCATION) {
+          currentLocation = path
+          cpt++
+        }
+      }
+
+      const login = new Login({
+        document,
+        localStorage,
+        onNavigate,
+        PREVIOUS_LOCATION,
+        store: null
+      })
+
+      login.onNavigate(PREVIOUS_LOCATION)
+
+      expect(localStorage.hasOwnProperty("user")).toBe(false)
+      expect(window.location.pathname).toBe("/")
+
+      window.onpopstate = (e) => {
+        const user = JSON.parse(localStorage.getItem('user'))
+        if (window.location.pathname === "/" && !user) {
+          document.body.style.backgroundColor = "#0E5AE5"
+          //rootDiv.innerHTML = ROUTES({ pathname: window.location.pathname })
+        }
+        else if (user) {
+          onNavigate(PREVIOUS_LOCATION)
+        }
+      }
+
+
+      fireEvent.popState(document.body)
+
+      expect(cpt).toBe(1)
+      expect(currentLocation).toBe(ROUTES_PATH.Login)
+
+    })
+  })
+})*/

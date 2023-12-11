@@ -54,7 +54,8 @@ tests unitaires / intégrations
  - test updateBill navigate
  BUG
   - utilisation de user event 62.96%
- - correction bug user event 77.77%
+  - correction bug user event 77.77%
+ - icon dowload
 -------------------------
 
 tests end to end (parcours employé)
