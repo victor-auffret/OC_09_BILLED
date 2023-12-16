@@ -12,12 +12,14 @@ import { fireEvent, screen, waitFor } from "@testing-library/dom";
 describe("Given that I am a user on login page", () => {
 
 
-  describe("When i do not anything", () => {
+  describe("When it's my first visit", () => {
     test("Then it should localstorage is empty", () => {
       document.body.innerHTML = LoginUI();
       expect(window.localStorage.length).toBe(0)
     })
+  })
 
+  describe("When i do not anything", () => {
     test("Then title h1 billed is here", async () => {
       document.body.innerHTML = LoginUI();
       await waitFor(() => screen.getByTestId("form-employee"))
@@ -26,6 +28,11 @@ describe("Given that I am a user on login page", () => {
       //expect(document.body.style.backgroundColor).toBe("rgb(14, 90, 229)")
     })
   })
+
+});
+
+// employe
+describe("Given that I am a user on login page", () => {
 
   // scenario 1 champs vide
   describe("When I do not fill fields and I click on employee button Login In", () => {
@@ -395,7 +402,6 @@ describe("Given that I am a user on login page", () => {
   describe("When i use employee login / pass on admin form", () => {
     test("Then i should be ...", () => {
 
-
       document.body.innerHTML = LoginUI();
       const inputData = {
         type: "Admin",
@@ -461,56 +467,3 @@ describe("Given that I am a user on login page", () => {
     })
   })
 });
-
-// both 
-/*
-describe("Given that I am a user on login page", () => {
-  describe("When i use previous event button without be connected", () => {
-    test("Then it should be on a login page", () => {
-
-      document.body.innerHTML = LoginUI()
-
-      let PREVIOUS_LOCATION = ""
-      let currentLocation = ROUTES_PATH.Login;
-      let cpt = 0;
-
-      const onNavigate = (path) => {
-        if (path == PREVIOUS_LOCATION) {
-          currentLocation = path
-          cpt++
-        }
-      }
-
-      const login = new Login({
-        document,
-        localStorage,
-        onNavigate,
-        PREVIOUS_LOCATION,
-        store: null
-      })
-
-      login.onNavigate(PREVIOUS_LOCATION)
-
-      expect(localStorage.hasOwnProperty("user")).toBe(false)
-      expect(window.location.pathname).toBe("/")
-
-      window.onpopstate = (e) => {
-        const user = JSON.parse(localStorage.getItem('user'))
-        if (window.location.pathname === "/" && !user) {
-          document.body.style.backgroundColor = "#0E5AE5"
-          //rootDiv.innerHTML = ROUTES({ pathname: window.location.pathname })
-        }
-        else if (user) {
-          onNavigate(PREVIOUS_LOCATION)
-        }
-      }
-
-
-      fireEvent.popState(document.body)
-
-      expect(cpt).toBe(1)
-      expect(currentLocation).toBe(ROUTES_PATH.Login)
-
-    })
-  })
-})*/
