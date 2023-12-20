@@ -3,7 +3,7 @@
   "scripts": {
     "start": "live-server",
     "dev": "live-server",
-    "test-no-cache": "jest --coverage --noStackTrace --silent --watchAll --no-cache",
+    "test-bis": "jest --coverage --noStackTrace --watchAll --no-cache",
     "test": "jest --coverage --noStackTrace --silent"
   },
   "jest": {
