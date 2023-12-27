@@ -53,7 +53,13 @@ export const card = (bill) => {
 }
 
 export const cards = (bills) => {
-  return bills && bills.length ? bills.map(bill => card(bill)).join("") : ""
+  const sortBills = (a, b) => {
+    if (a.date == b.date) {
+      return 0
+    }
+    return (a.date < b.date) ? 1 : - 1;
+  }
+  return bills && bills.length ? bills.sort(sortBills).map(bill => card(bill)).join("") : ""
 }
 
 export const getStatus = (index) => {

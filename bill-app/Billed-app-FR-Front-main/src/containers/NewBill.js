@@ -1,6 +1,12 @@
 import { ROUTES_PATH } from '../constants/routes.js'
 import Logout from "./Logout.js"
 
+const acceptedMimeType = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
+
+const testFormatFile = (format = "") => {
+  return acceptedMimeType.includes(format)
+}
+
 export default class NewBill {
 
   constructor({ document, onNavigate, store, localStorage }) {
@@ -19,56 +25,44 @@ export default class NewBill {
 
   handleChangeFile = e => {
     e.preventDefault()
+
     const input = this.document.querySelector(`input[data-testid="file"]`)
     const file = input.files[0]
-    //const filePath = e.target.value.split(/\\/g)
-    const fileName = file.name // filePath[filePath.length - 1]
-    const formData = new FormData()
-    const email = localStorage.getItem("user").email
-    formData.append('file', file)
-    formData.append('email', email)
+    const fileName = file.name
 
-    const acceptedMimeType = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
-    //const acceptExt = ["jpg", "jpeg", "png", "gif"]
-    // acceptExt.findIndex(ext => file?.fileName?.endsWith(ext)) >= 0
+    this.goodFormatFile = testFormatFile(file?.type)
 
-    console.log("TEST FILE TYPE : ", file?.type)
+    if (this.goodFormatFile) {
+      const formData = new FormData()
+      // ERREUR ICI
+      // const email = localStorage.getItem("user").email
+      const email = JSON.parse(localStorage.getItem("user")).email
+      formData.append('file', file)
+      formData.append('email', email)
+      this.formData = formData
+      this.fileName = fileName
 
-    if (acceptedMimeType.includes(file?.type)) {
-      this.store
-        .bills()
-        .create({
-          data: formData,
-          headers: {
-            noContentType: true
-          }
-        })
-        .then((res) => {
-          console.log("res", res)
-          const { fileUrl, /*fileName,*/ key, filePath } = res
-          //const { fileUrl, key } = res
-          console.log("file url", fileUrl ?? filePath)
-          console.log("key ", key)
-          this.billId = key
-          this.fileUrl = fileUrl ?? filePath
-          //this.fileUrl = filePath
-          this.fileName = fileName
-        }).catch(console.error)
+      input.classList.remove("is-invalid");
+      input.classList.add("blue-border");
     } else {
-
       console.log("mauvais mime type")
       this.fileName = null;
       this.fileUrl = null;
+
       if ("DataTransfer" in globalThis) {
         const dt = new globalThis.DataTransfer()
         input.files = dt.files
       }
-      //input.files = []
       input.type = "text"
       delete input.files
       input.value = ""
       input.type = "file"
-      // throw new Error("mauvais format : " + JSON.stringify(e) + " file => " + file.type)
+      input.classList.add("is-invalid");
+      input.classList.remove("blue-border");
+
+      alert(`mauvais format : votre fichier est au format => ${file.type} alors que les formats autorisés sont : ${acceptedMimeType.join(' ')}`);
+      //throw new Error(`mauvais mime type : ${file?.type}`)
+
     }
   }
 
@@ -77,8 +71,9 @@ export default class NewBill {
     console.log("submit new bill ", this.fileName, " ", this.fileUrl)
     //if (this.fileName != null && this.fileUrl != null) {
     console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
-    const user = localStorage.getItem("user")
-    const email = JSON.parse(user).email
+    const user = JSON.parse(localStorage.getItem("user"))
+    const email = user.email
+    console.log("email : ", email)
     const bill = {
       email,
       type: e.target.querySelector(`select[data-testid="expense-type"]`).value,
@@ -92,17 +87,38 @@ export default class NewBill {
       fileName: this.fileName,
       status: 'pending'
     }
-    console.log("submit new bill NO")
-    if (!this.fileName) return;
-    console.log("submit new bill OK")
-    this.updateBill(bill)
-    this.onNavigate(ROUTES_PATH['Bills'])
-    //}
-    console.log("submit new bill NO")
+    console.log('bill handle submit : ', bill)
+
+    if (this.goodFormatFile) {
+      console.log('handle submit good format file : ', this.formData)
+
+      this.store
+        .bills()
+        .create({
+          data: this.formData,
+          headers: {
+            noContentType: true,
+          },
+        })
+        .then((res) => {
+          console.log("res", res)
+          const { fileUrl, key, filePath } = res
+          console.log("file url", fileUrl ?? filePath)
+          console.log("key ", key)
+          this.billId = key
+          this.fileUrl = fileUrl ?? filePath
+        })
+        .then(() => {
+          this.updateBill(bill);
+        })
+        .catch((error) => console.error(error));
+    }
   }
 
   // not need to cover this function by tests
   updateBill = (bill) => {
+    console.log("update bill : ", this.billId)
+    console.log("bill : ", bill)
     if (this.store) {
       this.store
         .bills()
@@ -113,5 +129,4 @@ export default class NewBill {
         .catch(error => console.error(error))
     }
   }
-
 }

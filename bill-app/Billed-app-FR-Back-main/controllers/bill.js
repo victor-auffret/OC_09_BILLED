@@ -20,7 +20,6 @@ const create = async (req, res) => {
       commentAdmin,
       amount,
     } = req.body;
-
     const { file } = req;
     const bill = await Bill.create({
       name,
@@ -134,6 +133,7 @@ const list = async (req, res) => {
 
 const update = async (req, res) => {
   const { user } = req;
+  console.log(user)
   if (!user) return res.status(401).send({ message: 'user must be authenticated' });
   try {
     const {

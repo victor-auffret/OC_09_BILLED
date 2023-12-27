@@ -39,7 +39,6 @@ export default class {
     if ('modal' in elem) {
       elem.modal('show')
     }
-
   }
 
   getBills = () => {
